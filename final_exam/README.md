@@ -316,8 +316,8 @@ c) Estimate a regression model to predict ```log_price``` as a function of
 
 ```
 lm_model_5 <- lm(data = airplane_full,
-formula = log_price ~ log_age + pass + wtop + fixgear + tdrag + log_horse + log_fuel + log_cruise )
-
+formula = log_price ~ log_age + pass + wtop + fixgear + tdrag + log_horse + log_fuel + log_ceiling + log_cruise )
+ 
 summary(lm_model_5)
 
 Call:
@@ -362,42 +362,50 @@ d) If you notice that any coefficients are statistically insignificant,
 
 
 ```
+lm_model_6 <- lm(data = airplane_full,
++     formula = log_price ~ log_age + pass + fixgear + tdrag + log_horse + log_fuel + log_ceiling + log_cruise )
+> 
+> summary(lm_model_6)
+
 Call:
-lm(formula = log_price ~ log_age + fixgear + tdrag + log_horse + 
+lm(formula = log_price ~ log_age + pass + fixgear + tdrag + log_horse + 
     log_fuel + log_ceiling + log_cruise, data = airplane_full)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
--0.46839 -0.11055 -0.01486  0.11283  0.56699 
+-0.49050 -0.11120  0.01233  0.11318  0.55682 
 
 Coefficients:
             Estimate Std. Error t value Pr(>|t|)    
-(Intercept)  3.60114    1.00767   3.574 0.000448 ***
-log_age     -1.56382    0.06292 -24.855  < 2e-16 ***
-fixgear     -0.12727    0.07176  -1.773 0.077791 .  
-tdrag       -0.41605    0.08149  -5.105 8.09e-07 ***
-log_horse    1.18812    0.10833  10.968  < 2e-16 ***
-log_fuel     0.16152    0.08552   1.889 0.060474 .  
-log_ceiling -0.01823    0.08891  -0.205 0.837725    
-log_cruise   1.02850    0.19716   5.217 4.81e-07 ***
+(Intercept)  4.24337    1.02967   4.121 5.67e-05 ***
+log_age     -1.52909    0.06376 -23.984  < 2e-16 ***
+pass         0.05215    0.02156   2.419   0.0165 *  
+fixgear     -0.13729    0.07097  -1.934   0.0546 .  
+tdrag       -0.45681    0.08220  -5.557 9.39e-08 ***
+log_horse    0.98983    0.13475   7.345 6.24e-12 ***
+log_fuel     0.17135    0.08453   2.027   0.0441 *  
+log_ceiling -0.02693    0.08785  -0.307   0.7595    
+log_cruise   1.05544    0.19497   5.413 1.89e-07 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 0.1928 on 187 degrees of freedom
-Multiple R-squared:  0.9413,	Adjusted R-squared:  0.9391 
-F-statistic: 428.6 on 7 and 187 DF,  p-value: < 2.2e-16
+Residual standard error: 0.1903 on 186 degrees of freedom
+Multiple R-squared:  0.9431,	Adjusted R-squared:  0.9407 
+F-statistic: 385.5 on 8 and 186 DF,  p-value: < 2.2e-16
 
-The variable wtop is statistically insignificant and should be removed as the adjusted 
-R-squared value decreased only by little bit, when buying aiplanes people consider low wings and 
-top wings for performance and safety purposes but it's not the main factor, 
-and no large change in other coefficients were observed.
+The wtop variable is statistically insignificant and should be removed from the regression model. 
+The adjusted R-squared value decreased slightly after its removal, indicating that it doesn't contribute significantly to the model. 
+While the choice of wing position (low wings vs. top wings) might influence performance and safety in aircraft design, it is not the primary factor considered when evaluating airplane prices. 
+No significant changes were observed in the other coefficients after its removal.
 
 ```
 
 Next regression model:
 
 ```
-summary(lm_model_7)
+lm_model_7 <- lm(data = airplane_full,
++     formula = log_price ~ log_age + pass + fixgear + tdrag + log_horse + log_fuel + log_cruise )
+> summary(lm_model_7)
 
 Call:
 lm(formula = log_price ~ log_age + pass + fixgear + tdrag + log_horse + 
@@ -424,28 +432,50 @@ Residual standard error: 0.1898 on 187 degrees of freedom
 Multiple R-squared:  0.9431,	Adjusted R-squared:  0.941 
 F-statistic: 442.7 on 7 and 187 DF,  p-value: < 2.2e-16
 
-The log_ceiling variable is statistically insignificant and should be removed from the 
-regression, as the adjusted R-squared value increased when removed, the maximum
-flying hight of an airplane is important but typically based on the plane is on
-range and commercial planes are the one concern about really heigh altitudes, 
-and no large change on other variables were observed.
-```
-
-Next regression model, if necessary:
-
-```
-
-Copy your regression results here.
-
+The log_ceiling variable is statistically insignificant and should be removed from the regression model.
+The adjusted R-squared value increased slightly when it was excluded, suggesting that it doesn't add significant value to the model. 
+While the maximum flying altitude of an airplane is important, it typically depends on the specific type of aircraft.
+Commercial airplanes are the primary concern when it comes to high altitudes, so this variable may not be as critical for the current context. 
+No significant changes were observed in the other coefficients after its removal.
 
 ```
 
 Next regression model, if necessary:
 
 ```
+lm_model_8 <- lm(data = airplane_full,
++     formula = log_price ~ log_age + fixgear + tdrag + log_horse + log_fuel + log_cruise )
+> summary(lm_model_8)
 
-Copy your regression results here.
+Call:
+lm(formula = log_price ~ log_age + fixgear + tdrag + log_horse + 
+    log_fuel + log_cruise, data = airplane_full)
 
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.46666 -0.11163 -0.01509  0.11560  0.56091 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  3.49038    0.84856   4.113 5.83e-05 ***
+log_age     -1.56393    0.06276 -24.921  < 2e-16 ***
+fixgear     -0.13197    0.06783  -1.946   0.0532 .  
+tdrag       -0.42275    0.07445  -5.678 5.09e-08 ***
+log_horse    1.18481    0.10685  11.089  < 2e-16 ***
+log_fuel     0.16225    0.08522   1.904   0.0585 .  
+log_cruise   1.01941    0.19163   5.320 2.93e-07 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1923 on 188 degrees of freedom
+Multiple R-squared:  0.9413,	Adjusted R-squared:  0.9394 
+F-statistic: 502.6 on 6 and 188 DF,  p-value: < 2.2e-16
+
+The passenger variable was removed as it was marginally insignificant. 
+However, removing it led to a slight decrease in the adjusted R-squared value, which is expected since a predictor was removed. 
+The number of passengers could still be relevant depending on the plane's intended use. 
+For instance, the plane may be designed for personal or family use, where the number of passengers could affect its appeal and price. 
+No significant changes were observed in the other coefficients.
 
 ```
 
@@ -453,8 +483,73 @@ Next regression model, if necessary:
 
 ```
 
-Copy your regression results here.
+lm_model_9 <- lm(data = airplane_full,
++     formula = log_price ~ log_age + tdrag + log_horse + log_fuel + log_cruise )
+> summary(lm_model_9)
 
+Call:
+lm(formula = log_price ~ log_age + tdrag + log_horse + log_fuel + 
+    log_cruise, data = airplane_full)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.47869 -0.12981 -0.01332  0.11582  0.56832 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  4.81143    0.51266   9.385  < 2e-16 ***
+log_age     -1.56455    0.06322 -24.749  < 2e-16 ***
+tdrag       -0.35166    0.06534  -5.382 2.17e-07 ***
+log_horse    1.18384    0.10763  10.999  < 2e-16 ***
+log_fuel     0.16284    0.08585   1.897   0.0594 .  
+log_cruise   0.74080    0.12826   5.776 3.11e-08 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1937 on 189 degrees of freedom
+Multiple R-squared:  0.9401,	Adjusted R-squared:  0.9385 
+F-statistic: 593.6 on 5 and 189 DF,  p-value: < 2.2e-16
+
+The fixgear variable was removed as it was marginally insignificant. 
+However, removing this variable caused a slight decrease in the adjusted R-squared value, suggesting that fixgear might still play a role in predicting price. 
+The type of gear, whether fixed or retractable, could influence the price by affecting performance or requiring additional equipment such as hydraulic systems. 
+Additionally, no significant changes were observed in the coefficients of the other variables.
+
+```
+
+Next regression model, if necessary:
+
+```
+lm_model_10 <- lm(data = airplane_full,
++     formula = log_price ~ log_age + tdrag + log_horse + log_cruise )
+> summary(lm_model_10)
+
+Call:
+lm(formula = log_price ~ log_age + tdrag + log_horse + log_cruise, 
+    data = airplane_full)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.51552 -0.13447 -0.00468  0.11952  0.60763 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  4.68463    0.51174   9.154  < 2e-16 ***
+log_age     -1.58088    0.06305 -25.072  < 2e-16 ***
+tdrag       -0.35481    0.06577  -5.395 2.02e-07 ***
+log_horse    1.31011    0.08515  15.386  < 2e-16 ***
+log_cruise   0.77756    0.12765   6.091 6.10e-09 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.195 on 190 degrees of freedom
+Multiple R-squared:  0.939,	Adjusted R-squared:  0.9377 
+F-statistic: 731.1 on 4 and 190 DF,  p-value: < 2.2e-16
+
+The removal of the marginally insignificant variable, log_fuel, results in a decrease in the adjusted R-squared value.
+This suggests that log_fuel might still have an influence on the price. 
+The rationale behind this is that larger fuel volumes allow for longer distances and higher weight capacity, which may be critical factors in determining the price of an airplane. 
+Additionally, no significant changes were observed in the coefficients of the remaining variables.
 
 ```
 
@@ -465,10 +560,34 @@ of your final regression model.
 
 
 ```
+Model 7
+Call:
+lm(formula = log_price ~ log_age + pass + fixgear + tdrag + log_horse + 
+    log_fuel + log_cruise, data = airplane_full)
 
-Copy your final regression results here.
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.49050 -0.10900  0.01349  0.11515  0.54790 
 
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  4.07670    0.87236   4.673 5.66e-06 ***
+log_age     -1.52942    0.06359 -24.051  < 2e-16 ***
+pass         0.05188    0.02149   2.414   0.0167 *  
+fixgear     -0.14417    0.06717  -2.147   0.0331 *  
+tdrag       -0.46649    0.07571  -6.161 4.32e-09 ***
+log_horse    0.98598    0.13384   7.367 5.44e-12 ***
+log_fuel     0.17238    0.08426   2.046   0.0422 *  
+log_cruise   1.04191    0.18944   5.500 1.24e-07 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
+Residual standard error: 0.1898 on 187 degrees of freedom
+Multiple R-squared:  0.9431,	Adjusted R-squared:  0.941 
+F-statistic: 442.7 on 7 and 187 DF,  p-value: < 2.2e-16
+
+This model retains the most significant variables, has a slightly better adjusted R-squared than other models, 
+and does not add complexity by removing explanatoy predictors.
 ```
 
 f) Finally, for each of the variables in the datasets, 
@@ -479,8 +598,19 @@ f) Finally, for each of the variables in the datasets,
 
 ```
 
-Enter your response here.
+Positively:
+pass: A higher number of passengers is correlated with higher airplane prices
+log_horse: More horsepower is positively correlated with higher airplane prices
+log_fuel: Greater fuel capacity is correlated to higher airplane prices
+log_cruise: Higher cruise speed is correlated with higher airplane prices
 
+Negatively:
+log_age: Older airplanes are correlated to reduce prices
+fixgear: Airplanes with fixed gear are correlated with lower prices than those with retractable gear
+tdrag: Tail-dragger is associated with lower prices
+wtop: Wing above the fusalage is correlated to reduce prices
+
+log_ceiling: is negative but statistcally is close to zero and could be considered with no pos or neg relationship
 
 ```
 
